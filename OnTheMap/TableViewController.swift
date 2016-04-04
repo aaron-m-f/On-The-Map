@@ -15,6 +15,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var studentDownloadProgressLabel: UILabel!
     @IBOutlet weak var studenTableView: UITableView!
     
+    let studentModel = StudentModel.sharedInstance()
     let udacityClient = UdacityClient.sharedInstance()
     let parseClient = ParseClient.sharedInstance()
     let geoCodingClient = GeoCodingClient.sharedInstance()
@@ -29,7 +30,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if parseClient.students.count == 0 {
+        if studentModel.students.count == 0 {
             studentDownloadProgressLabel.hidden = false
             downloadingStudentsIndicator.startAnimating()
             
@@ -68,7 +69,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return parseClient.students.count
+        return studentModel.students.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,7 +79,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("STUDENT_CELL", forIndexPath: indexPath) as! StudentTableViewCell
         
-        let student = parseClient.students[indexPath.section]
+        let student = studentModel.students[indexPath.section]
         
         cell.studentNameLabel.text = student.firstName + " " + student.lastName
         cell.studentMediaURL = student.mediaURL

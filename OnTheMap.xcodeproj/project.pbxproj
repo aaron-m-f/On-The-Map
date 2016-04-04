@@ -30,6 +30,7 @@
 		D4CB27621CA8D69D00EBF97B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4CB27611CA8D69D00EBF97B /* FBSDKCoreKit.framework */; };
 		D4CB27641CA8D8D500EBF97B /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4CB27631CA8D8D500EBF97B /* FBSDKLoginKit.framework */; };
 		D4CB27661CA8E38A00EBF97B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CB27651CA8E38A00EBF97B /* MapViewController.swift */; };
+		D4E4D3971CB2F9C600415A23 /* StudentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E4D3961CB2F9C600415A23 /* StudentModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		D4CB27611CA8D69D00EBF97B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		D4CB27631CA8D8D500EBF97B /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		D4CB27651CA8E38A00EBF97B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		D4E4D3961CB2F9C600415A23 /* StudentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,9 +79,6 @@
 		D4662BFF1CA9302600F1CF26 /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				D4662C001CA935BC00F1CF26 /* ParseClient.swift */,
-				D42E08B31CAB3B64009AB200 /* ParseConstants.swift */,
-				D4662C021CA9376F00F1CF26 /* StudentInformation.swift */,
 			);
 			name = Parse;
 			sourceTree = "<group>";
@@ -105,8 +104,6 @@
 		D4C2A1381CAA68AF000392DD /* GeoCoding */ = {
 			isa = PBXGroup;
 			children = (
-				D4C2A1391CAA68BF000392DD /* GeoCodingClient.swift */,
-				D42E08B51CAB3E50009AB200 /* GeoCodingConstants.swift */,
 			);
 			name = GeoCoding;
 			sourceTree = "<group>";
@@ -157,11 +154,9 @@
 		D4CB275C1CA8C5CC00EBF97B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D4662C041CA93B1200F1CF26 /* NetworkModel.swift */,
-				D42E08B91CAB4278009AB200 /* NetworkConstants.swift */,
-				D4C2A1381CAA68AF000392DD /* GeoCoding */,
-				D4662BFF1CA9302600F1CF26 /* Parse */,
-				D4CB275D1CA8C5D000EBF97B /* Udacity */,
+				D4E4D3961CB2F9C600415A23 /* StudentModel.swift */,
+				D4662C021CA9376F00F1CF26 /* StudentInformation.swift */,
+				D4E4D3981CB2FA4700415A23 /* Networking */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -169,8 +164,6 @@
 		D4CB275D1CA8C5D000EBF97B /* Udacity */ = {
 			isa = PBXGroup;
 			children = (
-				D4CB275E1CA8C5F700EBF97B /* UdacityClient.swift */,
-				D42E08B71CAB3E9E009AB200 /* UdacityConstants.swift */,
 			);
 			name = Udacity;
 			sourceTree = "<group>";
@@ -183,6 +176,24 @@
 				D4CB27611CA8D69D00EBF97B /* FBSDKCoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D4E4D3981CB2FA4700415A23 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D4662C041CA93B1200F1CF26 /* NetworkModel.swift */,
+				D42E08B91CAB4278009AB200 /* NetworkConstants.swift */,
+				D4C2A1381CAA68AF000392DD /* GeoCoding */,
+				D4C2A1391CAA68BF000392DD /* GeoCodingClient.swift */,
+				D42E08B51CAB3E50009AB200 /* GeoCodingConstants.swift */,
+				D4662BFF1CA9302600F1CF26 /* Parse */,
+				D4662C001CA935BC00F1CF26 /* ParseClient.swift */,
+				D42E08B31CAB3B64009AB200 /* ParseConstants.swift */,
+				D4CB275D1CA8C5D000EBF97B /* Udacity */,
+				D4CB275E1CA8C5F700EBF97B /* UdacityClient.swift */,
+				D42E08B71CAB3E9E009AB200 /* UdacityConstants.swift */,
+			);
+			name = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,6 +284,7 @@
 				D4CB27661CA8E38A00EBF97B /* MapViewController.swift in Sources */,
 				D42E08BA1CAB4278009AB200 /* NetworkConstants.swift in Sources */,
 				D42E08B41CAB3B64009AB200 /* ParseConstants.swift in Sources */,
+				D4E4D3971CB2F9C600415A23 /* StudentModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

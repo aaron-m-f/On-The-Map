@@ -13,7 +13,8 @@ class UdacityClient: NSObject {
     
     let session = NSURLSession.sharedSession()
     let parseClient = ParseClient.sharedInstance()
-    
+    let studentModel = StudentModel.sharedInstance()
+
     // MARK : Variables
     
     private(set) var sessionID : String = ""
@@ -97,7 +98,7 @@ class UdacityClient: NSObject {
             
             /* Get Session and User Data */
             if let result = result as? NSDictionary, sessionResult = result.objectForKey("session") as? NSDictionary, accountResult = result.objectForKey("account") as? NSDictionary  {
-                self.parseClient.userDictionary[ParseClient.Student.uniqueKey] = accountResult.objectForKey("key") as! String
+                self.studentModel.userDictionary[StudentModel.Student.uniqueKey] = accountResult.objectForKey("key") as! String
                 self.sessionID = sessionResult.objectForKey("id") as! String
                 
                 self.getNameFromUdacity()
@@ -125,8 +126,8 @@ class UdacityClient: NSObject {
             
             /* Get name of user */
             if let result = result as? NSDictionary, userResult = result.objectForKey("user") as? NSDictionary  {
-                self.parseClient.userDictionary[ParseClient.Student.firstName] = userResult.objectForKey("first_name") as! String
-                self.parseClient.userDictionary[ParseClient.Student.lastName] = userResult.objectForKey("last_name") as! String
+                self.studentModel.userDictionary[StudentModel.Student.firstName] = userResult.objectForKey("first_name") as! String
+                self.studentModel.userDictionary[StudentModel.Student.lastName] = userResult.objectForKey("last_name") as! String
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(Notification.receivedName, object: nil)
             } else {
@@ -141,7 +142,7 @@ class UdacityClient: NSObject {
         /* Reset Local Session Info */
         sessionID = ""
         loggingOut = true
-        ParseClient.sharedInstance().clearStudents()
+        studentModel.clearStudents()
         
         /* Reset Facebook Info */
         if facebookToken != "" {
@@ -221,7 +222,7 @@ class UdacityClient: NSObject {
     private func getUserURL() -> NSMutableURLRequest {
         let parameters = [String : AnyObject]()
                 
-        let pathExtension = Api.Path.users + (parseClient.userDictionary[ParseClient.Student.uniqueKey] as! String)
+        let pathExtension = Api.Path.users + (studentModel.userDictionary[StudentModel.Student.uniqueKey] as! String)
         return getURLRequestFromParameters(parameters, withPathExtension: pathExtension)
     }
     

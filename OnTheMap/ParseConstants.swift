@@ -10,17 +10,6 @@ import Foundation
 
 extension ParseClient {
     
-    struct Student {
-        static let objectID = "objectID"
-        static let firstName = "firstName"
-        static let lastName = "lastName"
-        static let mapString = "mapString"
-        static let mediaURL = "mediaURL"
-        static let latitude = "latitude"
-        static let longitude = "longitude"
-        static let uniqueKey = "uniqueKey"
-    }
-    
     struct Notification {
         static let studentInformationUpdated = "Student Information Updated"
         static let studentInformationError = "Student Information Error"

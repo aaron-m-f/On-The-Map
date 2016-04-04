@@ -19,12 +19,12 @@ struct StudentInformation {
     let longitude : Float
     
     init?(studentDict : [String : AnyObject]) {
-        if let firstName = studentDict[ParseClient.Student.firstName] as? String,
-        let lastName = studentDict[ParseClient.Student.lastName] as? String,
-        let mapString = studentDict[ParseClient.Student.mapString] as? String,
-        let mediaURL = studentDict[ParseClient.Student.mediaURL] as? String,
-        let latitude = studentDict[ParseClient.Student.latitude] as? Float,
-        let longitude = studentDict[ParseClient.Student.longitude] as? Float {
+        if let firstName = studentDict[StudentModel.Student.firstName] as? String,
+            let lastName = studentDict[StudentModel.Student.lastName] as? String,
+            let mapString = studentDict[StudentModel.Student.mapString] as? String,
+            let mediaURL = studentDict[StudentModel.Student.mediaURL] as? String,
+            let latitude = studentDict[StudentModel.Student.latitude] as? Float,
+            let longitude = studentDict[StudentModel.Student.longitude] as? Float {
             
             self.firstName = firstName
             self.lastName = lastName
@@ -33,13 +33,13 @@ struct StudentInformation {
             self.latitude = latitude
             self.longitude = longitude
             
-            if let uniqueKey = studentDict[ParseClient.Student.uniqueKey] as? String {
+            if let uniqueKey = studentDict[StudentModel.Student.uniqueKey] as? String {
                 self.uniqueKey = uniqueKey
             } else {
                 self.uniqueKey = ""
             }
             
-            if let objectID = studentDict[ParseClient.Student.objectID] as? String {
+            if let objectID = studentDict[StudentModel.Student.objectID] as? String {
                 self.objectID = objectID
             } else {
                 self.objectID = ""

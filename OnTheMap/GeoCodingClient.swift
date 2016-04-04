@@ -11,7 +11,7 @@ import MapKit
 
 class GeoCodingClient: NSObject {
 
-    let parseClient = ParseClient.sharedInstance()
+    let studentModel = StudentModel.sharedInstance()
 
     // MARK : Variables
 
@@ -51,10 +51,10 @@ class GeoCodingClient: NSObject {
             self.placingMark = true
             
             self.currentCoordinate = (firstPlacemark.location?.coordinate)!
-            self.parseClient.userDictionary[ParseClient.Student.mediaURL] = link 
-            self.parseClient.userDictionary[ParseClient.Student.mapString] = location 
-            self.parseClient.userDictionary[ParseClient.Student.latitude] = self.currentCoordinate.latitude
-            self.parseClient.userDictionary[ParseClient.Student.longitude] = self.currentCoordinate.longitude
+            self.studentModel.userDictionary[StudentModel.Student.mediaURL] = link
+            self.studentModel.userDictionary[StudentModel.Student.mapString] = location
+            self.studentModel.userDictionary[StudentModel.Student.latitude] = self.currentCoordinate.latitude
+            self.studentModel.userDictionary[StudentModel.Student.longitude] = self.currentCoordinate.longitude
             
             completionHandler(result: true, error: nil)
         }

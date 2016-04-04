@@ -11,13 +11,8 @@ import Foundation
 class ParseClient: NSObject {
     
     let session = NSURLSession.sharedSession()
-    
-    // MARK : Variables
-    
-    private(set) var students = [StudentInformation]()
-    var userDictionary = [String : AnyObject]()
-    var userObjectID : String = ""
-    
+    let studentModel = StudentModel.sharedInstance()
+
     // MARK: Get Array of Student Information
     
     func getStudentInformation() {
@@ -39,7 +34,7 @@ class ParseClient: NSObject {
     private func getStudentInformationWithCompletionHandler(completionHandler : (result : AnyObject?, error : NSError?) -> Void) {
         
         /* Check for saved student info */
-        if students.count > 0 {
+        if studentModel.students.count > 0 {
             completionHandler(result: nil, error: nil)
             return
         }
@@ -62,7 +57,7 @@ class ParseClient: NSObject {
             }
             
             /* GUARD: Was data acceptable? */
-            guard self.setStudents(result) else {
+            guard self.studentModel.setStudents(result) else {
                 NetworkModel.sendError("Corrupted student data received.", verbose: false, withCompletionHandler: completionHandler)
                 return
             }
@@ -94,7 +89,7 @@ class ParseClient: NSObject {
     
     private func checkUserInformation(withCompletionHandler completionHandler : (result : AnyObject?, error : NSError?) -> Void) {
         
-        let whereData = [Api.Parameter.Key.uniqueKey : userDictionary[Student.uniqueKey] as! String]
+        let whereData = [Api.Parameter.Key.uniqueKey : studentModel.userDictionary[StudentModel.Student.uniqueKey] as! String]
         let whereBody = NetworkModel.getHTTPBodyFormat(whereData)
         
         var parameters = [String : AnyObject]()
@@ -120,7 +115,7 @@ class ParseClient: NSObject {
                 return
             }
             
-            self.userObjectID = resultsArray[0]["objectId"] as! String
+            self.studentModel.userObjectID = resultsArray[0]["objectId"] as! String
             
             completionHandler(result: resultsArray.count, error: nil)
         }
@@ -128,7 +123,7 @@ class ParseClient: NSObject {
     
     private func POSTUserInformation(withCompletionHandler completionHandler : (result : AnyObject?, error : NSError?) -> Void) {
         
-        let userBody = NetworkModel.getHTTPBodyFormat(userDictionary)
+        let userBody = NetworkModel.getHTTPBodyFormat(studentModel.userDictionary)
         
         let parameters = [String : AnyObject]()
 
@@ -155,7 +150,7 @@ class ParseClient: NSObject {
                 return
             }
             
-            self.userObjectID = userObjectID
+            self.studentModel.userObjectID = userObjectID
             
             completionHandler(result: result, error: nil)
         }
@@ -163,11 +158,11 @@ class ParseClient: NSObject {
     
     private func PUTUserInformation(withCompletionHandler completionHandler : (result : AnyObject?, error : NSError?) -> Void) {
         
-        let userBody = NetworkModel.getHTTPBodyFormat(userDictionary)
+        let userBody = NetworkModel.getHTTPBodyFormat(studentModel.userDictionary)
         
         let parameters = [String : AnyObject]()
         
-        let request = getURLRequestFromParameters(parameters, withPathExtension:"/" + userObjectID)
+        let request = getURLRequestFromParameters(parameters, withPathExtension:"/" + studentModel.userObjectID)
         request.HTTPMethod = NetworkModel.Api.Method.put
         request.addValue(Api.Application.Value.id, forHTTPHeaderField: Api.Application.Field.id)
         request.addValue(Api.Application.Value.key, forHTTPHeaderField: Api.Application.Field.key)
@@ -186,47 +181,6 @@ class ParseClient: NSObject {
             
             completionHandler(result: result, error: nil)
         }
-    }
-    
-    // MARK: Data Methods    
-    
-    private func setStudents(studentDict : AnyObject?) -> Bool {
-        
-        students = [StudentInformation]()
-        
-        guard let studentResults = studentDict?["results"] as? [[String : AnyObject]] else {
-            return false
-        }
-        
-        for studentData in studentResults {
-            guard let student = StudentInformation.init(studentDict: studentData) else {
-                return false
-            }
-            students.append(student)
-        }
-        
-        return true
-    }
-    
-    func clearStudents() {
-        students = [StudentInformation]()
-    }
-    
-    func addUserAsStudent() {
-        let userAsStudent = StudentInformation(studentDict: userDictionary)!
-        
-        /* Erase user if already in students */
-        var index = 0
-        for student in students {
-            if student.uniqueKey == userAsStudent.uniqueKey {
-                students.removeAtIndex(index)
-                break
-            }
-            ++index
-        }
-        
-        /* Add user to beginning of students */
-        students.insert(userAsStudent, atIndex: 0)
     }
     
     // MARK : URL Method

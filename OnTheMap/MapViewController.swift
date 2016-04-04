@@ -22,6 +22,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var emptyView: UIImageView!
     
+    let studentModel = StudentModel.sharedInstance()
     let udacityClient = UdacityClient.sharedInstance()
     let parseClient = ParseClient.sharedInstance()
     let geoCodingClient = GeoCodingClient.sharedInstance()
@@ -45,7 +46,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             goToUserInputtedRegion()
             
         /* Student List has already been loaded */
-        } else if parseClient.students.count > 0 {
+        } else if studentModel.students.count > 0 {
             setStudentAnnotations()
         
         /* Student List still loading */
@@ -115,7 +116,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         var annotations = [MKPointAnnotation]()
         
-        for student in parseClient.students {
+        for student in studentModel.students {
             annotations.append(getAnnotation(student))
         }
         
@@ -128,7 +129,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         var annotations = [MKPointAnnotation]()
         
-        let userAsStudent = StudentInformation(studentDict: parseClient.userDictionary)!
+        let userAsStudent = StudentInformation(studentDict: studentModel.userDictionary)!
         annotations.append(getAnnotation(userAsStudent))
 
         self.mapView.addAnnotations(annotations)

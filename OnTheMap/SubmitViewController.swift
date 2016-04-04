@@ -14,12 +14,14 @@ class SubmitViewController: InputViewController, MapViewControllerDelegate {
     @IBOutlet weak var userLocationLabel: UITextField!
     @IBOutlet weak var userLinkLabel: UITextField!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     
     @IBOutlet weak var geocachingActivityIndicator: UIActivityIndicatorView!
     
+    let studentModel = StudentModel.sharedInstance()
     let parseClient = ParseClient.sharedInstance()
     let geoCodingClient = GeoCodingClient.sharedInstance()
-    
+
     var defaultLocationLabelText = ""
     var defaultLinkLabelText = ""
     
@@ -55,6 +57,12 @@ class SubmitViewController: InputViewController, MapViewControllerDelegate {
     
     override func keyboardWillShow (notification : NSNotification) {
         view.bounds.origin.y = min(max(0, getKeyboardHeight(notification) - (view.frame.size.height * 0.5 - userLocationLabel.bounds.height * 4.0)), view.frame.size.height * 0.5 - userLocationLabel.bounds.height * 2.0)
+    }
+    
+    // MARK: Back Button Method
+    
+    @IBAction func backPressed(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: Submit User Pin Method
@@ -93,13 +101,13 @@ class SubmitViewController: InputViewController, MapViewControllerDelegate {
         if didAccept {
             toggleInputFieldsAndButtons()
             geocachingActivityIndicator.startAnimating()
-            navigationItem.hidesBackButton = true
+            backButton.enabled = false
 
-            parseClient.addUserAsStudent()
+            studentModel.addUserAsStudent()
             parseClient.placeUserInformation() { result, error in
                 dispatch_async(dispatch_get_main_queue()) {
 
-                    self.navigationItem.hidesBackButton = false
+                    self.backButton.enabled = true
 
                     /* GUARD: Was there an error? */
                     guard (error == nil) else {
@@ -112,7 +120,8 @@ class SubmitViewController: InputViewController, MapViewControllerDelegate {
                         return
                     }
                     
-                    self.navigationController!.popToRootViewControllerAnimated(true)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+
                 }
             }
         }
