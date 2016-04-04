@@ -50,11 +50,14 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - Student Information
     
     func updateStudentTable() {
-        studentDownloadProgressLabel.hidden = true
-        downloadingStudentsIndicator.stopAnimating()
+        dispatch_async(dispatch_get_main_queue()) {
+
+            self.studentDownloadProgressLabel.hidden = true
+            self.downloadingStudentsIndicator.stopAnimating()
             
-        studenTableView.hidden = false
-        studenTableView.reloadData()
+            self.studenTableView.hidden = false
+            self.studenTableView.reloadData()
+        }
     }
     
     func updateProgressLabel(notification : NSNotification) {
