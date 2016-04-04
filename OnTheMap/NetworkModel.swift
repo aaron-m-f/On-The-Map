@@ -30,11 +30,11 @@ class NetworkModel: NSObject {
     
     // MARK: Data Methods
     
-    static func dataTaskWithRequest(request : NSURLRequest, udacity: Bool, withCompletionHandler completionHandler : (result : AnyObject?, error : NSError?)->Void) {
+    static func dataTaskWithRequest(request : NSURLRequest, verbose: Bool, udacity: Bool, withCompletionHandler completionHandler : (result : AnyObject?, error : NSError?)->Void) {
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
             
-            guard let data = NetworkModel.checkForErrors(data, response: response, error: error, withCompletionHandler: completionHandler) else {
+            guard let data = NetworkModel.checkForErrors(data, verbose: verbose, response: response, error: error, withCompletionHandler: completionHandler) else {
                 return
             }
             
@@ -77,29 +77,29 @@ class NetworkModel: NSObject {
     
     // MARK: Error Methods
     
-    static func checkForErrors(data : NSData?, response : NSURLResponse?, error : NSError?, withCompletionHandler completionHandler : (result : AnyObject?, error : NSError?) -> Void) -> NSData? {
+    static func checkForErrors(data : NSData?, verbose: Bool, response : NSURLResponse?, error : NSError?, withCompletionHandler completionHandler : (result : AnyObject?, error : NSError?) -> Void) -> NSData? {
         
         /* GUARD: Was there an error? */
         guard (error == nil) else {
-            NetworkModel.sendError("\(error!.userInfo[NSLocalizedDescriptionKey]!)", verbose: true, withCompletionHandler: completionHandler)
+            NetworkModel.sendError("\(error!.userInfo[NSLocalizedDescriptionKey]!)", verbose: verbose, withCompletionHandler: completionHandler)
             return nil
         }
         
         /* GUARD: Were Login Credentials Correct? */
         guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode != 403 else {
-            NetworkModel.sendError("Account not found or invalid credentials.", verbose: true, withCompletionHandler: completionHandler)
+            NetworkModel.sendError("Account not found or invalid credentials.", verbose: verbose, withCompletionHandler: completionHandler)
             return nil
         }
         
         /* GUARD: Did we get a successful 2XX response? */
         guard statusCode >= 200 && statusCode <= 299 else {
-            NetworkModel.sendError("Your request did not return acceptable data.", verbose: true, withCompletionHandler: completionHandler)
+            NetworkModel.sendError("Your request did not return acceptable data.", verbose: verbose, withCompletionHandler: completionHandler)
             return nil
         }
         
         /* GUARD: Was there any data returned? */
         guard let data = data else {
-            NetworkModel.sendError("No data was returned by the request.", verbose: true, withCompletionHandler: completionHandler)
+            NetworkModel.sendError("No data was returned by the request.", verbose: verbose, withCompletionHandler: completionHandler)
             return nil
         }
         

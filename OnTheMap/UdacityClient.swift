@@ -88,7 +88,7 @@ class UdacityClient: NSObject {
         request.addValue(NetworkModel.Api.Header.Value.json, forHTTPHeaderField: NetworkModel.Api.Header.Field.contentType)
         request.HTTPBody = signInBody.dataUsingEncoding(NSUTF8StringEncoding)
         
-        NetworkModel.dataTaskWithRequest(request, udacity: true) { result, error in
+        NetworkModel.dataTaskWithRequest(request, verbose:true, udacity: true) { result, error in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -116,7 +116,7 @@ class UdacityClient: NSObject {
         
         let request = getUserURL()
         
-        NetworkModel.dataTaskWithRequest(request, udacity: true) { result, error in
+        NetworkModel.dataTaskWithRequest(request, verbose:true, udacity: true) { result, error in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -164,7 +164,7 @@ class UdacityClient: NSObject {
             request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
         
-        NetworkModel.dataTaskWithRequest(request, udacity: true) { result, error in
+        NetworkModel.dataTaskWithRequest(request, verbose:true, udacity: true) { result, error in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {

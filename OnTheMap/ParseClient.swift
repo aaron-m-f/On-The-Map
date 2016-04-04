@@ -48,7 +48,7 @@ class ParseClient: NSObject {
         request.addValue(Api.Application.Value.id, forHTTPHeaderField: Api.Application.Field.id)
         request.addValue(Api.Application.Value.key, forHTTPHeaderField: Api.Application.Field.key)
 
-        NetworkModel.dataTaskWithRequest(request, udacity: false) { result, error in
+        NetworkModel.dataTaskWithRequest(request, verbose: false, udacity: false) { result, error in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -58,7 +58,7 @@ class ParseClient: NSObject {
             
             /* GUARD: Was data acceptable? */
             guard self.studentModel.setStudents(result) else {
-                NetworkModel.sendError("Corrupted student data received.", verbose: false, withCompletionHandler: completionHandler)
+                NetworkModel.sendError("Corrupted student data.", verbose: false, withCompletionHandler: completionHandler)
                 return
             }
             
@@ -99,7 +99,7 @@ class ParseClient: NSObject {
         request.addValue(Api.Application.Value.id, forHTTPHeaderField: Api.Application.Field.id)
         request.addValue(Api.Application.Value.key, forHTTPHeaderField: Api.Application.Field.key)
         
-        NetworkModel.dataTaskWithRequest(request, udacity: false) { result, error in
+        NetworkModel.dataTaskWithRequest(request, verbose:true, udacity: false) { result, error in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -111,7 +111,7 @@ class ParseClient: NSObject {
             
             /* GUARD: Was data acceptable? */
             guard let resultsArray = result?["results"] as? [[String:AnyObject]] else {
-                NetworkModel.sendError("Corrupted student data received.", verbose: true, withCompletionHandler: completionHandler)
+                NetworkModel.sendError("Corrupted student data.", verbose: true, withCompletionHandler: completionHandler)
                 return
             }
             
@@ -134,7 +134,7 @@ class ParseClient: NSObject {
         request.addValue(NetworkModel.Api.Header.Value.json, forHTTPHeaderField: NetworkModel.Api.Header.Field.contentType)
         request.HTTPBody = userBody.dataUsingEncoding(NSUTF8StringEncoding)
         
-        NetworkModel.dataTaskWithRequest(request, udacity: false) { result, error in
+        NetworkModel.dataTaskWithRequest(request, verbose:true, udacity: false) { result, error in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -146,7 +146,7 @@ class ParseClient: NSObject {
             
             /* GUARD: Was data acceptable? */
             guard let userObjectID = result?["objectId"] as? String else {
-                NetworkModel.sendError("Corrupted student data received.", verbose: true, withCompletionHandler: completionHandler)
+                NetworkModel.sendError("Corrupted student data.", verbose: true, withCompletionHandler: completionHandler)
                 return
             }
             
@@ -169,7 +169,7 @@ class ParseClient: NSObject {
         request.addValue(NetworkModel.Api.Header.Value.json, forHTTPHeaderField: NetworkModel.Api.Header.Field.contentType)
         request.HTTPBody = userBody.dataUsingEncoding(NSUTF8StringEncoding)
         
-        NetworkModel.dataTaskWithRequest(request, udacity: false) { result, error in
+        NetworkModel.dataTaskWithRequest(request, verbose:true, udacity: false) { result, error in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
