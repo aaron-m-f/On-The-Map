@@ -82,7 +82,13 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let student = studentModel.students[indexPath.section]
         
         cell.studentNameLabel.text = student.firstName + " " + student.lastName
-        cell.studentMediaURL = student.mediaURL
+        
+        if let url = NSURL(string: student.mediaURL) where UIApplication.sharedApplication().canOpenURL(url) {
+            cell.studentMediaURL = student.mediaURL
+            cell.calloutButton.hidden = false
+        } else {
+            cell.calloutButton.hidden = true
+        }
         
         let region = GeoCodingClient.getMKCoordinateRegion(student.latitude, longitude: student.longitude, span: 0.00125)
         

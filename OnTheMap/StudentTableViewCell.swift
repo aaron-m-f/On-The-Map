@@ -14,6 +14,8 @@ class StudentTableViewCell: UITableViewCell {
     @IBOutlet weak var studentNameLabel: UILabel!
     
     @IBOutlet weak var studentMapView: MKMapView!
+    
+    @IBOutlet weak var calloutButton: UIButton!
 
     var studentMediaURL: String?
     

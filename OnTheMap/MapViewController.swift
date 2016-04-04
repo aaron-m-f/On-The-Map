@@ -162,9 +162,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
             pinView!.pinTintColor = .redColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pinView!.canShowCallout = true
+
+            if let string = annotation.subtitle, let url = NSURL(string: string!) where UIApplication.sharedApplication().canOpenURL(url) {
+                pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            }
         } else {
             pinView!.annotation = annotation
         }

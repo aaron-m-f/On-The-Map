@@ -149,6 +149,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="calloutButton" destination="aIX-59-T9A" id="U8w-ie-0ss"/>
                                             <outlet property="studentMapView" destination="0qQ-cE-B65" id="R0p-5r-QNb"/>
                                             <outlet property="studentNameLabel" destination="Dz7-b0-2ob" id="RXG-Ze-QTM"/>
                                         </connections>
